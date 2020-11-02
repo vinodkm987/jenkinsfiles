@@ -1,0 +1,17 @@
+pipeline {
+    agent { label 'usdatazaphyb1-remotesellproxy' }
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'This is build Number $BUILD_NUMBER'
+            }
+        }
+		  stage('Copy File') {
+            steps {
+                sh '''
+				    cp -p /home/remotesellproxy/test.ok /home/remotesellproxy/proxy/test.done
+				'''
+            }
+        }
+    }
+}
