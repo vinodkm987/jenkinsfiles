@@ -4,9 +4,11 @@ pipeline {
         string(name:'DeploymentName', description:'Please enter the Deployment File ..')
     }
     stages {
-        stage('Deployment File') {
+        stage('Download Deployment File') {
             steps {
-                echo 'This is build Number ${BUILD_NUMBER} and the ${DeploymentName}'
+
+                #echo 'This is build Number ${BUILD_NUMBER} and the ${param.DeploymentName}'
+                wget --user-agent="Mozilla" https://lpl.sharepoint.com/sites/Remotereservationandpayment-RemoteAppDEV/Documents%20partages/Remote%20App%20DEV/fulfillment-pos-0.1.6.zip
             }
         }
 		  stage('Copy Deployment File') {
