@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Deployment File') {
             steps {
-                echo 'This is build Number ${BUILD_NUMBER} and the {DeploymentName}'
+                echo 'This is build Number ${BUILD_NUMBER} and the ${DeploymentName}'
             }
         }
 		  stage('Copy Deployment File') {
@@ -19,7 +19,8 @@ pipeline {
             stage('Shutdown Node Process') {
             steps {
                 sh '''	
-                ps aux|grep node |grep server.js |awk {'print $2'}|xargs kill -9
+                #ps aux|grep node |grep server.js |awk {'print $2'}|xargs kill -9
+                echo "Killing the Process"
 				'''
             }
             }
