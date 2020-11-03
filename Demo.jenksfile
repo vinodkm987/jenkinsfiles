@@ -9,6 +9,7 @@ pipeline {
                 sh '''
                 cd /home/remotesellproxy/deploys
                 wget --user-agent="Mozilla" https://lpl.sharepoint.com/sites/Remotereservationandpayment-RemoteAppDEV/Documents%20partages/Remote%20App%20DEV/fulfillment-pos-0.1.6.zip
+                '''
             }
         }
 		  stage('Copy Deployment File') {
