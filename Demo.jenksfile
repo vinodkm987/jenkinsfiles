@@ -9,7 +9,7 @@ pipeline {
 		  stage('Copy File') {
             steps {
                 sh '''
-				    cp -p /home/remotesellproxy/test.ok /home/remotesellproxy/proxy/test.done
+				    cp -p /home/remotesellproxy/test.ok /home/remotesellproxy/jenkins/test.done
 				'''
             }
         }
