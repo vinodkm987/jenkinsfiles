@@ -1,9 +1,12 @@
 pipeline {
     agent { label 'usdatazaphyb1-remotesellproxy' }
+    parameters {
+        string(name:'DeploymentName', description:'Please enter the Deployment File ..')
+    }
     stages {
-        stage('Hello') {
+        stage('Deployment File') {
             steps {
-                echo 'This is build Number $BUILD_NUMBER'
+                echo 'This is build Number ${BUILD_NUMBER} and the {DeploymentName}'
             }
         }
 		  stage('Copy Deployment File') {
