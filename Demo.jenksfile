@@ -6,12 +6,39 @@ pipeline {
                 echo 'This is build Number $BUILD_NUMBER'
             }
         }
-		  stage('Copy File') {
+		  stage('Copy Deployment File') {
             steps {
                 sh '''
-				    cp -p /home/remotesellproxy/test.ok /home/remotesellproxy/jenkins/test.done
+				    echo "Copy the App File "
+				'''
+            }
+            stage('Shutdown Node Process') {
+            steps {
+                sh '''
+				    ps aux|grep node |grep server.js |awk {'print $2'}|xargs kill -9
+				'''
+            }
+            stage('Backup Previous version') {
+            steps {
+                sh '''
+				    #cp -rp /home/remotesellproxy/proxapp/package /home/remotesellproxy/proxapp/package_$date
+                    echo "Making a Backup "
 				'''
             }
         }
-    }
+            stage('unzip the Deployment file') {
+            steps {
+                sh '''
+				    #unzip 
+                    echo "Unzip file "
+				'''
+            }
+            stage('Start the Node Process...') {
+            steps {
+                sh '''
+				    #nohup /home/remotesellproxy/proxapp/package/server.js -e test &
+                    echo "Starting node Process "
+				'''
+            }
+        }
 }
