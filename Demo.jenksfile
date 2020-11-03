@@ -12,11 +12,13 @@ pipeline {
 				    echo "Copy the App File "
 				'''
             }
+          }
             stage('Shutdown Node Process') {
             steps {
-                sh '''
-				    ps aux|grep node |grep server.js |awk {'print $2'}|xargs kill -9
+                sh '''	
+                ps aux|grep node |grep server.js |awk {'print $2'}|xargs kill -9
 				'''
+            }
             }
             stage('Backup Previous version') {
             steps {
@@ -32,6 +34,7 @@ pipeline {
 				    #unzip 
                     echo "Unzip file "
 				'''
+            }
             }
             stage('Start the Node Process...') {
             steps {
