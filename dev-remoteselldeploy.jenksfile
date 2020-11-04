@@ -24,9 +24,9 @@ pipeline {
             stage('Shutdown Node Process') {
             steps {
                 sh '''	
-                #ps aux|grep node |grep server.js |awk {'print $2'}|xargs kill -9
                 echo "Killing the Process"
                 echo `ps aux|grep node |grep server.js |awk {'print $2'}`
+                ps aux|grep node |grep server.js |awk {'print $2'}|xargs kill -9
 				'''
               }
             }
@@ -47,17 +47,35 @@ pipeline {
                 sh '''
 				    cd /home/remotesellproxy/proxyapp
                     echo "Unzip file "
-                    #unzip -o ${DeploymentName}
+                    unzip -o ${DeploymentName}
 				'''
             }
             }
             stage('Start the Node Process...') {
             steps {
                 sh '''
-				    #nohup /home/remotesellproxy/proxapp/package/server.js -e test &
+				    nohup /home/remotesellproxy/proxapp/package/server.js -e test &
                     echo "Starting node Process "
 				'''
             }
+            post {
+              always {
+            echo 'This will always run'
+        }
+           success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
         }
 
 }
