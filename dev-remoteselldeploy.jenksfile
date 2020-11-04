@@ -24,17 +24,15 @@ pipeline {
           }
             stage('Shutdown Node Process') {
             steps {
-                  script {
+                 script {
                            def now = new Date()
                         println now.format("yyMMdd.HHmm", TimeZone.getTimeZone('UTC'))
                          }
-                }
-            steps {
                 sh '''	
                 #ps aux|grep node |grep server.js |awk {'print $2'}|xargs kill -9
                 echo "Killing the Process"
 				'''
-            }
+              }
             }
             stage('Backup Previous version') {
             steps {
