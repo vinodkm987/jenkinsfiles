@@ -24,10 +24,6 @@ pipeline {
           }
             stage('Shutdown Node Process') {
             steps {
-                 script {
-                           def now = new Date()
-                        println now.format("yyMMdd.HHmm", TimeZone.getTimeZone('UTC'))
-                         }
                 sh '''	
                 #ps aux|grep node |grep server.js |awk {'print $2'}|xargs kill -9
                 echo "Killing the Process"
@@ -36,8 +32,12 @@ pipeline {
             }
             stage('Backup Previous version') {
             steps {
+                       script {
+                           def now = new Date()
+                           println now.format("yyMMdd", TimeZone.getTimeZone('UTC'))
+                         }
                 sh '''
-				    #cp -rp /home/remotesellproxy/proxapp/package /home/remotesellproxy/proxyapp/package_$date
+				    #cp -rp /home/remotesellproxy/proxapp/package /home/remotesellproxy/proxyapp/package_${now.format("yyMMdd", TimeZone.getTimeZone('UTC')}
                     echo "Making a Backup "
 				'''
             }
