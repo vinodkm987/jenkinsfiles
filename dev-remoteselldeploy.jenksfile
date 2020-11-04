@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh '''
 				    echo "Copy the App File "
-                    cp -rp /home/remotesellproxy/deploys/${DeploymentName} /home/remotesellproxy/proxapp/${DeploymentName}
+                    cp -rp /home/remotesellproxy/deploys/${DeploymentName} /home/remotesellproxy/proxyapp/${DeploymentName}
 				'''
             }
           }
@@ -33,7 +33,7 @@ pipeline {
             stage('Backup Previous version') {
             steps {
                 sh '''
-				    #cp -rp /home/remotesellproxy/proxapp/package /home/remotesellproxy/proxapp/package_$date
+				    #cp -rp /home/remotesellproxy/proxapp/package /home/remotesellproxy/proxyapp/package_$date
                     echo "Making a Backup "
 				'''
             }
