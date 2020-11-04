@@ -9,6 +9,7 @@ pipeline {
                 sh '''
                 cd /home/remotesellproxy/deploys
                 echo "${DeploymentName}"
+                rm /home/remotesellproxy/deploys/${DeploymentName}
                 wget --user-agent="Mozilla" https://lpl.sharepoint.com/sites/Remotereservationandpayment-RemoteAppDEV/Documents%20partages/Remote%20App%20DEV/${DeploymentName}
                 '''
             }
@@ -17,6 +18,7 @@ pipeline {
             steps {
                 sh '''
 				    echo "Copy the App File "
+                    cp -rp /home/remotesellproxy/deploys/${DeploymentName} /home/remotesellproxy/proxapp/${DeploymentName}
 				'''
             }
           }
