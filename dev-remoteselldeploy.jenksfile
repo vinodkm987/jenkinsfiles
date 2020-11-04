@@ -37,7 +37,7 @@ pipeline {
                            println now.format("yyyMMdd", TimeZone.getTimeZone('UTC'))
                          }
                 sh '''
-				    cp -rp /home/remotesellproxy/proxapp/package /home/remotesellproxy/proxyapp/package_${now.format("yyMMdd", TimeZone.getTimeZone('UTC')}
+				    cp -rp /home/remotesellproxy/proxapp/package /home/remotesellproxy/proxyapp/package_`date +'%Y%m%d'`
                     echo "Making a Backup "
 				'''
             }
