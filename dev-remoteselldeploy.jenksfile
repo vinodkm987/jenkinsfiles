@@ -27,6 +27,7 @@ pipeline {
                 sh '''	
                 #ps aux|grep node |grep server.js |awk {'print $2'}|xargs kill -9
                 echo "Killing the Process"
+                echo `ps aux|grep node |grep server.js |awk {'print $2'}`
 				'''
               }
             }
