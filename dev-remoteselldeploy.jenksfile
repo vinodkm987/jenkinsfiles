@@ -45,8 +45,9 @@ pipeline {
             stage('unzip the Deployment file') {
             steps {
                 sh '''
-				    #unzip 
+				    cd /home/remotesellproxy/proxyapp
                     echo "Unzip file "
+                    #unzip -o ${DeploymentName}
 				'''
             }
             }
