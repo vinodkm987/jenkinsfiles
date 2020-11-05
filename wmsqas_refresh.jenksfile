@@ -22,14 +22,14 @@ pipeline {
             stage('NoArchivelog Mode') {
             steps {
                 parallel(
-                a : {
+                noarchivelogmode : {
                 sh '''
 				    echo " Starting DB and Changing it to NoArchivelog Mode "
                     #/oraqas/manh/3rdparty/swtools/oracle/product/12.1.0/dbhome_1/bin/dbshut /oraqas/manh/3rdparty/swtools/oracle/product/12.1.0/dbhome_1
 				    echo " Starting DB and changing it to No Archivelog Mode"
                 '''
                 },
-                b: {
+                unzipdmp: {
                     sh '''
 				      echo " Unzipping the file "
                       #gunzip /oraqas/export/wmosqas/${PRDBackupFile}
