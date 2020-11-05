@@ -15,7 +15,7 @@ pipeline {
             steps {
                 sh '''
 				    echo "Copy the App File "
-                    scp -rp /export_wmosprd/wmosprd/${PRDBackupFile} /oraqas/export/wmosqas/.
+                    scp -rp oraprd@usdatmaprdb1:/export_wmosprd/wmosprd/${PRDBackupFile} /oraqas/export/wmosqas/.
 				'''
             }
           }
