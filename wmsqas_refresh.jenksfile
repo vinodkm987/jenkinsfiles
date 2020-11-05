@@ -41,18 +41,21 @@ pipeline {
                    echo "Importing the DB"
 				'''
             }
+            }
         stage('Execute Post Import Script..') {
             steps {
                 sh '''
                    echo "Executing Post Import"
 				'''
             }
+        }
         stage('Grant permisssion to Wmsqas..') {
             steps {
                 sh '''
                    echo "Granting Permissions"
 				'''
             }
+        }
             post {
               always {
             echo 'This will always run'
