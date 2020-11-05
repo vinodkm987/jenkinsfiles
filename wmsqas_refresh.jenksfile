@@ -1,0 +1,77 @@
+pipeline {
+    agent { label 'usdatazdvhyb1-remotesellproxy' }
+    parameters {
+        string(name:'PRDBackupFile', description:'Please enter the Wmos PRD Dump File ..')
+    }
+    stages {
+        stage('Stop the Application') {
+            steps {
+                sh '''
+                   echo " Stopping all Applications .. "
+                '''
+            }
+        }
+		  stage('Copy Prd File to QAS') {
+            steps {
+                sh '''
+				    echo "Copy the App File "
+                    #scp -rp /export_wmosprd/wmosprd/${PRDBackupFile} /oraqas/export/wmosqas/.
+				'''
+            }
+          }
+            stage('NoArchivelog Mode') {
+            steps {
+                sh '''
+				    echo " Starting DB and Changing it to NoArchivelog Mode "
+                    #/oraqas/manh/3rdparty/swtools/oracle/product/12.1.0/dbhome_1/bin/dbshut /oraqas/manh/3rdparty/swtools/oracle/product/12.1.0/dbhome_1
+				    echo " Starting DB and changing it to No Archivelog Mode"
+                '''
+            }
+        }
+            stage('Drop the Schema MDA and WMSQAS') {
+            steps {
+                sh '''
+                   echo "Dropping the Schemas
+				'''
+            }
+            }
+            stage('Import the MDA WMSQAS') {
+            steps {
+                sh '''
+                   echo "Importing the DB"
+				'''
+            }
+        stage('Execute Post Import Script..') {
+            steps {
+                sh '''
+                   echo "Executing Post Import"
+				'''
+            }
+        stage('Grant permisssion to Wmsqas..') {
+            steps {
+                sh '''
+                   echo "Granting Permissions"
+				'''
+            }
+            post {
+              always {
+            echo 'This will always run'
+        }
+           success {
+            echo 'This import finished successful please Start WM and Import License.'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+        }
+
+}
+}
