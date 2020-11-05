@@ -31,7 +31,7 @@ pipeline {
             stage('Drop the Schema MDA and WMSQAS') {
             steps {
                 sh '''
-                   echo "Dropping the Schemas
+                   echo "Dropping the Schemas"
 				'''
             }
             }
