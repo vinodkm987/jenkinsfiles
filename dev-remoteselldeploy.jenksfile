@@ -9,7 +9,7 @@ pipeline {
                 sh '''
                 cd /home/remotesellproxy/deploys
                 echo "${DeploymentName}"
-                wget --user-agent="Mozilla" -q -O ${DeploymentName} https://lpl.sharepoint.com/sites/Remotereservationandpayment-RemoteAppDEV/Documents%20partages/Remote%20App%20DEV/${DeploymentName}
+                #wget --user-agent="Mozilla" -q -O ${DeploymentName} https://lpl.sharepoint.com/sites/Remotereservationandpayment-RemoteAppDEV/Documents%20partages/Remote%20App%20DEV/${DeploymentName}
                 '''
             }
         }
