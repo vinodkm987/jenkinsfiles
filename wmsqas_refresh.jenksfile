@@ -54,7 +54,7 @@ pipeline {
             }
             stage('Import the MDA WMSQAS') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'Oracle_Export_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]),
+                withCredentials([usernamePassword(credentialsId: 'Oracle_Export_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
                 sh '''
                    echo "Importing the DB"
                    echo "${USERNAME} AND ${PASSWORD}" 
