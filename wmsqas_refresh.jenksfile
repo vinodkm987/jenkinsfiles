@@ -32,7 +32,7 @@ pipeline {
                 unzipdmp: {
                     sh '''
 				      echo " Unzipping the file "
-                      gunzip /oraqas/export/wmosqas/${PRDBackupFile}
+                      #gunzip /oraqas/export/wmosqas/${PRDBackupFile}
                 ''' 
                 }
                 )
