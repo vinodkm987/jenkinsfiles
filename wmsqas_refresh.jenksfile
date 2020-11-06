@@ -12,10 +12,11 @@ pipeline {
             }
         }
 		  stage('Copy Prd File to QAS') {
+              def Prddumpzipfile={PRDBackupFile}.gz
             steps {
                 sh '''
 				    echo "Copy the App File "
-                    scp -rp oraprd@usdatmaprdb1:/export_wmosprd/wmosprd/${PRDBackupFile}.gz /oraqas/export/wmosqas/.
+                    scp -rp oraprd@usdatmaprdb1:/export_wmosprd/wmosprd/${Prddumpzipfile} /oraqas/export/wmosqas/.
 				'''
             }
           }
