@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh '''
 				    echo "Copy the App File ${Prddumpzipfile}"
-                    scp -rp oraprd@usdatmaprdb1:/export_wmosprd/wmosprd/${Prddumpzipfile} /oraqas/export/wmosqas/.
+                    #scp -rp oraprd@usdatmaprdb1:/export_wmosprd/wmosprd/${Prddumpzipfile} /oraqas/export/wmosqas/.
 				'''
             }
           }
@@ -56,12 +56,14 @@ pipeline {
             stage('Import the MDA WMSQAS') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'Oracle_Export_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                {
                 sh '''
                    echo "Importing the DB"
                    echo "Username is USERNAME"
                    #impdp system/chanel#123 directory=expdumpdir remap_schema=MDAPRD:MDAQAS,WMSPRD:WMSQAS schemas=MDAPRD,WMSPRD job_name=impdp_wm_job logfile=chanqa.log dumpfile=${PRDBackupFile}
 
 				'''
+                }
             }
             }
         stage('Execute Post Import Script..') {
