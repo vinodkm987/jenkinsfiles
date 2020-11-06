@@ -3,6 +3,7 @@ pipeline {
     parameters {
         string(name:'PRDBackupFile', description:'Please enter the Wmos PRD Dump File ..')
     }
+    Prddumpzipfile = '"${PRDBackupFile}".gz'
     stages {
         stage('Stop the Application') {
             steps {
@@ -12,7 +13,6 @@ pipeline {
             }
         }
 		  stage('Copy Prd File to QAS') {
-              def Prddumpzipfile={PRDBackupFile}.gz
             steps {
                 sh '''
 				    echo "Copy the App File "
