@@ -38,7 +38,7 @@ pipeline {
                 unzipdmp: {
                     sh '''
 				      echo " Unzipping the file "
-                      #gunzip /oraqas/export/wmosqas/${Prddumpzipfile}
+                      gunzip /oraqas/export/wmosqas/${Prddumpzipfile}
                 ''' 
                 }
                 )
