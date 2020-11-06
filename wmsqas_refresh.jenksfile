@@ -3,7 +3,7 @@ pipeline {
     parameters {
         string(name:'PRDBackupFile', description:'Please enter the Wmos PRD Dump File ..')
     }
-    Prddumpzipfile = '"${PRDBackupFile}".gz'
+    def Prddumpzipfile = '"${PRDBackupFile}".gz'
     stages {
         stage('Stop the Application') {
             steps {
