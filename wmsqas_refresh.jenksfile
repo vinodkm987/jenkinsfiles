@@ -60,7 +60,7 @@ pipeline {
                 sh '''
                    echo "Importing the DB"
                    echo "Username is $USERNAME"
-                   /home/oraqas/scripts/test.sh
+                   /home/oraqas/scripts/import_wmschema.sh
                    #impdp system/chanel#123 directory=expdumpdir remap_schema=MDAPRD:MDAQAS,WMSPRD:WMSQAS schemas=MDAPRD,WMSPRD job_name=impdp_wm_job logfile=chanqa.log dumpfile=${PRDBackupFile}
 
 				'''
