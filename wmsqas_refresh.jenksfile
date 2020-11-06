@@ -18,11 +18,14 @@ pipeline {
             steps {
                 sh '''
 				    echo "Copy the App File ${Prddumpzipfile}"
-                    #scp -rp oraprd@usdatmaprdb1:/export_wmosprd/wmosprd/${Prddumpzipfile} /oraqas/export/wmosqas/.
+                    scp -rp oraprd@usdatmaprdb1:/export_wmosprd/wmosprd/${Prddumpzipfile} /oraqas/export/wmosqas/.
 				'''
             }
           }
-            stage('NoArchivelog Mode') {
+            stage('NoArchivelog Mode And unzip Dump File') {
+                   environment {
+                            Prddumpzipfile = "${PRDBackupFile}" + ".gz"
+              }
             steps {
                 parallel(
                 noarchivelogmode : {
@@ -35,7 +38,7 @@ pipeline {
                 unzipdmp: {
                     sh '''
 				      echo " Unzipping the file "
-                      #gunzip /oraqas/export/wmosqas/${PRDBackupFile}.gz
+                      #gunzip /oraqas/export/wmosqas/${Prddumpzipfile}
                 ''' 
                 }
                 )
