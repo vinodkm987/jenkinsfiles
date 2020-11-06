@@ -58,7 +58,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'Oracle_Export_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
                 sh '''
                    echo "Importing the DB"
-                   echo "Username is $USERNAME"
+                   echo "Username is USERNAME"
                    #impdp system/chanel#123 directory=expdumpdir remap_schema=MDAPRD:MDAQAS,WMSPRD:WMSQAS schemas=MDAPRD,WMSPRD job_name=impdp_wm_job logfile=chanqa.log dumpfile=${PRDBackupFile}
 
 				'''
