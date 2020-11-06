@@ -25,7 +25,7 @@ pipeline {
                 noarchivelogmode : {
                 sh '''
 				    echo " Starting DB and Changing it to NoArchivelog Mode "
-                    /home/oraqas/scripts/change_archivelog.sh
+                    #/home/oraqas/scripts/change_archivelog.sh
 				    echo " Starting DB and changing it to No Archivelog Mode"
                 '''
                 },
@@ -42,6 +42,7 @@ pipeline {
             steps {
                 sh '''
                    echo "Dropping the Schemas"
+                   /home/oraqas/scripts/dropsch.sh
 				'''
             }
             }
