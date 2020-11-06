@@ -39,7 +39,7 @@ pipeline {
                     sh '''
 				      echo " Unzipping the file ${Prddumpzipfile} "
                       #rm ${PRDBackupFile}
-                      gunzip /oraqas/export/wmosqas/${Prddumpzipfile}
+                      #gunzip /oraqas/export/wmosqas/${Prddumpzipfile}
                 ''' 
                 }
                 )
