@@ -57,12 +57,12 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'Oracle_Export_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
                 {
-                def ret = sh ('''
+                sh '''
                    echo "Importing the DB"
                    echo "Username is $USERNAME"
-                   #/home/oraqas/scripts/import_wmschema.sh
-				''')
-                println("Return : $ret ")
+                   /home/oraqas/scripts/import_wmschema.sh
+				'''
+        
                 }
             }
             }
