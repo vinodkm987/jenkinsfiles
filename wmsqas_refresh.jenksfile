@@ -66,6 +66,14 @@ pipeline {
                 }
             }
             }
+        stage('Start Oracle Listener.') {
+            steps {
+                sh '''
+                   echo "Starting Oracle Listener"
+                   /home/oraqas/scripts/startlistener.sh
+				'''
+            }
+            } 
         stage('Execute Post Import Script..') {
             steps {
              parallel(
