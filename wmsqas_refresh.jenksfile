@@ -90,7 +90,7 @@ pipeline {
             },
              'CrSailingTable' : {
                 
-                 echo "In Cr Sailing Script"
+                  step([$class: 'SQLPlusRunnerBuilder',credentialsId:'Oracle_Export_User', instance:'wmosqas',scriptType:'userDefined', script: '',customOracleHome:'/oraqas/manh/3rdparty/swtools/oracle/product/12.1.0/dbhome_1',scriptContent: 'select * from v$version'])
              }
              )
 }
