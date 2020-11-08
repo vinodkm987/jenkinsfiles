@@ -67,11 +67,15 @@ pipeline {
             }
             }
         stage('Start Oracle Listener.') {
+              def remote = [:]
+    remote.name = 'usdatmaqadb1'
+    remote.host = 'usdatmaqadb1.global.lpl.top'
+    remote.user = 'oraqas'
+    remote.password = 'password'
+    remote.allowAnyHosts = true
             steps {
-                sh '''
-                   echo "Starting Oracle Listener"
-                   /home/oraqas/scripts/startlistener.sh
-				'''
+                     writeFile file: 'abc.sh', text: 'ls'
+                     sshScript remote: remote, script: "abc.sh"
             }
             } 
         stage('Execute Post Import Script..') {
@@ -83,7 +87,8 @@ pipeline {
 				'''
             },
              'CrSailingTable' : {
-                 step([$class: 'SQLPlusRunnerBuilder',credentialsId:'Oracle_Export_User', instance:'wmosqas',scriptType:'userDefined', script: '',customOracleHome:'/oraqas/manh/3rdparty/swtools/oracle/product/12.1.0/dbhome_1',scriptContent: 'select * from v$version'])
+                 #step([$class: 'SQLPlusRunnerBuilder',credentialsId:'Oracle_Export_User', instance:'wmosqas',scriptType:'userDefined', script: '',customOracleHome:'/oraqas/manh/3rdparty/swtools/oracle/product/12.1.0/dbhome_1',scriptContent: 'select * from v$version'])
+                 echo "In Cr Sailing Script"
              }
              )
 }
