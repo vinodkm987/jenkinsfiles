@@ -75,8 +75,13 @@ pipeline {
                    remote.user = 'oraqas'
                    remote.password = 'password'
                    remote.allowAnyHosts = true
-                    writeFile file: 'abc.sh', text: '/oraqas/manh/3rdparty/swtools/oracle/product/12.1.0/dbhome_1/bin/lsnrctl status'
-                     sshScript remote: remote, script: "abc.sh"
+                    writeFile file: 'abc.sh', text: 'export ORACLE_BASE=/oraqas/manh/3rdparty/swtools/oracle'
+                    writeFile file: 'abc.sh', text: 'export ORACLE_HOME=/oraqas/manh/3rdparty/swtools/oracle/product/12.1.0/dbhome_1'
+                    writeFile file: 'abc.sh', text: 'export PATH=$PATH:$HOME/.local/bin:$HOME/bin:$ORACLE_HOME/bin'
+                    writeFile file: 'abc.sh', text: 'export ORACLE_SID=wmosqas'
+
+                    writeFile file: 'abc.sh', text: 'lsnrctl status'
+                    sshScript remote: remote, script: "abc.sh"
             }
             }
     } 
