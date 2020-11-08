@@ -67,17 +67,19 @@ pipeline {
             }
             }
         stage('Start Oracle Listener.') {
-              def remote = [:]
-    remote.name = 'usdatmaqadb1'
-    remote.host = 'usdatmaqadb1.global.lpl.top'
-    remote.user = 'oraqas'
-    remote.password = 'password'
-    remote.allowAnyHosts = true
+            node {
+                   def remote = [:]
+                   remote.name = 'usdatmaqadb1'
+                   remote.host = 'usdatmaqadb1.global.lpl.top'
+                   remote.user = 'oraqas'
+                   remote.password = 'password'
+                   remote.allowAnyHosts = true
             steps {
                      writeFile file: 'abc.sh', text: 'ls'
                      sshScript remote: remote, script: "abc.sh"
             }
-            } 
+        }
+    } 
         stage('Execute Post Import Script..') {
             steps {
              parallel(
