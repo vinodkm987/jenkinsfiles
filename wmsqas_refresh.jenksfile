@@ -75,7 +75,7 @@ pipeline {
                    remote.user = 'oraqas'
                    remote.password = 'password'
                    remote.allowAnyHosts = true
-                    writeFile file: 'abc.sh', text: 'ls'
+                    writeFile file: 'abc.sh', text: 'lsnrctl status'
                      sshScript remote: remote, script: "abc.sh"
             }
             }
