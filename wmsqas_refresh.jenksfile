@@ -71,6 +71,14 @@ pipeline {
                 echo ' Hello '
 
             }
+        stage('Change Oracle Username/Password') {
+            steps {
+                 sh '''
+                   echo "Executing Post Import"
+                   /home/oraqas/scripts/chng_password.sh
+				'''
+
+            }
     } 
         stage('Execute Post Import Script..') {
             steps {
