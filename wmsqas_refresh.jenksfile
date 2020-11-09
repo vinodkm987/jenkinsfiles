@@ -90,7 +90,7 @@ pipeline {
                 sh '''
                    echo "Importing the DB"
                    echo "Username is $USERNAME"
-                   /home/oraqas/scripts/import_wmschema.sh
+                   /home/oraqas/scripts/ExecutePostImport.sh
 				'''
         
                 }
