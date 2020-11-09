@@ -85,9 +85,15 @@ pipeline {
             steps {
              parallel(
             'PostImportScript': {
+            withCredentials([usernamePassword(credentialsId: 'Oracle_Export_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                {
                 sh '''
-                   echo "Executing Post Import"
+                   echo "Importing the DB"
+                   echo "Username is $USERNAME"
+                   /home/oraqas/scripts/import_wmschema.sh
 				'''
+        
+                }
             },
              'CrSailingTable' : {
                 echo 'Running sailing table'
