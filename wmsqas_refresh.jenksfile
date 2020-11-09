@@ -114,10 +114,35 @@ pipeline {
             steps {
                 sh '''
                    echo "Granting Permissions"
-                   /home/oraqas/scripts/grant_wm.sh
+                   /home/oraqas/scripts/grant_createdirectory_wm.sh
 				'''
             }
         }
+        stage('Import the MDA Config Files') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'Oracle_MDAQAS_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                {
+                sh '''
+                   echo "Importing the MDA Config"
+                   echo "Username is $USERNAME"
+                   /home/oraqas/scripts/import_mdaconfig.sh
+				'''
+        
+                }
+            }
+            }
+        stage('Import the WMSQAS Config Files') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'Oracle_WMSQAS_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                {
+                sh '''
+                   echo "Importing the WMS CONFIG"
+                   echo "Username is $USERNAME"
+                   /home/oraqas/scripts/import_wmsconfig.sh
+			'''
+                }
+            }
+            }
         }
     }
 
