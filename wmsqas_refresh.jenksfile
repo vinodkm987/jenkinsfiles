@@ -96,7 +96,15 @@ pipeline {
                 }
             },
              'CrSailingTable' : {
-                echo 'Running sailing table'
+                 withCredentials([usernamePassword(credentialsId: 'Oracle_Export_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                {
+                sh '''
+                   echo "Importing the DB"
+                   echo "Username is $USERNAME"
+                   /home/oraqas/scripts/createsailing.sh
+				'''
+        
+                }
              }
              )
 }
@@ -106,6 +114,7 @@ pipeline {
             steps {
                 sh '''
                    echo "Granting Permissions"
+                   /home/oraqas/scripts/grant_wm.sh
 				'''
             }
         }
