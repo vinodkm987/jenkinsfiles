@@ -71,6 +71,7 @@ pipeline {
                 echo ' Hello '
 
             }
+        }
         stage('Change Oracle Username/Password') {
             steps {
                  sh '''
