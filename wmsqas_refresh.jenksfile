@@ -68,10 +68,18 @@ pipeline {
             }
         stage('Start Oracle Listener.') {
             steps {
-                echo ' Hello '
-
+                script {
+                 def remote = [:]
+                   remote.name = 'usdatmaqadb1'
+                   remote.host = 'usdatmaqadb1.global.lpl.top'
+                   remote.user = 'oraqas'
+                   remote.password = 'password'
+                   remote.allowAnyHosts = true
+                    writeFile file: 'abc.sh', text: 'export ORACLE_BASE=/oraqas/manh/3rdparty/swtools/oracle;export ORACLE_HOME=/oraqas/manh/3rdparty/swtools/oracle/product/12.1.0/dbhome_1;export PATH=$PATH:$HOME/.local/bin:$HOME/bin:$ORACLE_HOME/bin;export ORACLE_SID=wmosqas;lsnrctl start;sleep 30'
+                    sshScript remote: remote, script: "abc.sh"
             }
-        }
+            }
+    } 
         stage('Change Oracle Username/Password') {
             steps {
                  sh '''
