@@ -54,6 +54,7 @@ pipeline {
             stage('Start the Node Process...') {
             steps {
                 sh '''
+                    export export JENKINS_NODE_COOKIE=dontKillMe
 				    nohup /home/remotesellproxy/proxyapp/package/server.js -e prod &
                     echo "Starting node Process "
 				'''
