@@ -54,6 +54,7 @@ pipeline {
             stage('Start the Node Process...') {
             steps {
                 sh '''
+                    export BUILD_ID=dontKillMe
 				    nohup /home/remotesellproxy/proxyapp/package/server.js -e test &
                     echo "Starting node Process "
 				'''
