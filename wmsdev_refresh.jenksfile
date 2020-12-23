@@ -52,7 +52,7 @@ pipeline {
             steps {
                 sh '''
                    echo "Dropping the Schemas"
-                   #/home/oradev/scripts/dropsch.sh
+                   /home/oradev/scripts/dropsch.sh
 				'''
             }
             }
@@ -63,7 +63,7 @@ pipeline {
                 sh '''
                    echo "Importing the DB"
                    echo "Username is $USERNAME"
-                  # /home/oradev/scripts/import_wmschema.sh
+                   /home/oradev/scripts/import_wmschema.sh
 				'''
         
                 }
@@ -72,9 +72,10 @@ pipeline {
         stage('Start Oracle Listener.') {
             steps {
                 sh '''
-                   export BUILD_ID=dontKillMe
+                    export BUILD_ID=dontKillMe
+                    export JENKINS_NODE_COOKIE=dontKillMe
                    echo "Starting the Oracle Listener"
-                   #/home/oradev/scripts/startlistener.sh
+                   /home/oradev/scripts/startlistener.sh
 				''' 
             }
     } 
