@@ -1,0 +1,154 @@
+pipeline {
+    agent { label 'usdatmadvdb1-oradev' }
+    parameters {
+        string(name:'PRDBackupFile', description:'Please enter the Wmos PRD Dump File ..')
+    }                   
+    stages {
+        stage('Stop the Application') {
+            steps {
+                sh '''
+                   export BUILD_ID=dontKillMe
+                   echo " Stopping all Applications .. "
+                '''
+            }
+        }
+		  stage('Copy Prd File to Dev') {
+              environment {
+                            Prddumpzipfile = "${PRDBackupFile}" + ".gz"
+              }
+            steps {
+                sh '''
+				    echo "Copy the App File ${Prddumpzipfile}"
+                    #scp -rp oraprd@usdatmaprdb1:/export_wmosprd/wmosprd/${Prddumpzipfile} /oradevs/export/wmosdev/.
+				'''
+            }
+          }
+            stage('NoArchivelog Mode And unzip Dump File') {
+                   environment {
+                            Prddumpzipfile = "${PRDBackupFile}" + ".gz"
+              }
+            steps {
+                parallel(
+                noarchivelogmode : {
+                sh '''
+                    export BUILD_ID=dontKillMe
+				    echo " Starting DB and Changing it to NoArchivelog Mode "
+                    /home/oradev/scripts/change_archivelog.sh
+				    echo " Starting DB and changing it to No Archivelog Mode"
+                '''
+                },
+                unzipdmp: {
+                    sh '''
+				      echo " Unzipping the file ${Prddumpzipfile} "
+                      #rm ${PRDBackupFile}
+                      #gunzip /oradevs/export/wmosdev/${Prddumpzipfile}
+                ''' 
+                }
+                )
+            }
+        }
+            stage('Drop the Schema MDA and WMSDEV') {
+            steps {
+                sh '''
+                   echo "Dropping the Schemas"
+                   #/home/oradev/scripts/dropsch.sh
+				'''
+            }
+            }
+            stage('Import the MDA WMSDEV') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'Oracle_Export_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                {
+                sh '''
+                   echo "Importing the DB"
+                   echo "Username is $USERNAME"
+                  # /home/oradev/scripts/import_wmschema.sh
+				'''
+        
+                }
+            }
+            }
+        stage('Start Oracle Listener.') {
+            steps {
+                sh '''
+                   export BUILD_ID=dontKillMe
+                   echo "Starting the Oracle Listener"
+                   #/home/oradev/scripts/startlistener.sh
+				''' 
+            }
+    } 
+        stage('Change Oracle Username/Password') {
+            steps {
+                 sh '''
+                   echo "Executing Post Import"
+                  # /home/oradev/scripts/chng_password.sh
+				'''
+
+            }
+    } 
+        stage('Execute Post Import Script..') {
+            steps {
+             parallel(
+            'PostImportScript': {
+            withCredentials([usernamePassword(credentialsId: 'Oracle_WMSDEV_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                {
+                sh '''
+                   echo "Importing the DB"
+                   echo "Username is $USERNAME"
+                   #/home/oradev/scripts/ExecutePostImport.sh
+				'''
+        
+                }
+            },
+             'CrSailingTable' : {
+                 withCredentials([usernamePassword(credentialsId: 'Oracle_Export_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                {
+                sh '''
+                   echo "Importing the DB"
+                   echo "Username is $USERNAME"
+                  # /home/oradev/scripts/createsailing.sh
+				'''
+        
+                }
+             }
+             )
+}
+             
+        }
+        stage('Grant permisssion to Wmsdev..') {
+            steps {
+                sh '''
+                   echo "Granting Permissions"
+                   #/home/oradev/scripts/grant_createdirectory_wm.sh
+				'''
+            }
+        }
+        stage('Import the MDA Config Files') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'Oracle_MDADEv_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                {
+                sh '''
+                   echo "Importing the MDA Config"
+                   echo "Username is $USERNAME"
+                   #/home/oradev/scripts/import_mdaconfig.sh
+				'''
+        
+                }
+            }
+            }
+        stage('Import the WMSDEv Config Files') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'Oracle_WMSQAS_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                {
+                sh '''
+                   echo "Importing the WMS CONFIG"
+                   echo "Username is $USERNAME"
+                   #/home/oradev/scripts/import_wmsconfig.sh
+			'''
+                }
+            }
+            }
+        }
+    }
+
+
