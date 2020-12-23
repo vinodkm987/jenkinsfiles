@@ -52,7 +52,7 @@ pipeline {
             steps {
                 sh '''
                    echo "Dropping the Schemas"
-                   /home/oradev/scripts/dropsch.sh
+                   #/home/oradev/scripts/dropsch.sh
 				'''
             }
             }
