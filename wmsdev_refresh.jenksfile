@@ -19,7 +19,7 @@ pipeline {
             steps {
                 sh '''
 				    echo "Copy the App File ${Prddumpzipfile}"
-                    scp -rp oraprd@usdatmaprdb1:/export_wmosprd/wmosprd/${Prddumpzipfile} /oradevs/export/wmosdev/.
+                    #scp -rp oraprd@usdatmaprdb1:/export_wmosprd/wmosprd/${Prddumpzipfile} /oradevs/export/wmosdev/.
 				'''
             }
           }
@@ -34,7 +34,7 @@ pipeline {
                     export BUILD_ID=dontKillMe
                     export JENKINS_NODE_COOKIE=dontKillMe
 				    echo " Starting DB and Changing it to NoArchivelog Mode "
-                    /home/oradev/scripts/change_archivelog.sh
+                    #/home/oradev/scripts/change_archivelog.sh
 				    echo " Starting DB and changing it to No Archivelog Mode"
                 '''
                 },
@@ -42,7 +42,7 @@ pipeline {
                     sh '''
 				      echo " Unzipping the file ${Prddumpzipfile} "
                       #rm ${PRDBackupFile}
-                      gunzip /oradevs/export/wmosdev/${Prddumpzipfile}
+                      #gunzip /oradevs/export/wmosdev/${Prddumpzipfile}
                 ''' 
                 }
                 )
