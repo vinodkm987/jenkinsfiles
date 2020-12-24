@@ -83,7 +83,7 @@ pipeline {
             steps {
                  sh '''
                    echo "Executing Post Import"
-                   /home/oradev/scripts/chng_password.sh
+                  # /home/oradev/scripts/chng_password.sh
 				'''
 
             }
@@ -97,7 +97,7 @@ pipeline {
                 sh '''
                    echo "Importing the DB"
                    echo "Username is $USERNAME"
-                   /home/oradev/scripts/ExecutePostImport.sh
+                  # /home/oradev/scripts/ExecutePostImport.sh
 				'''
         
                 }
@@ -121,7 +121,7 @@ pipeline {
             steps {
                 sh '''
                    echo "Granting Permissions"
-                   /home/oradev/scripts/grant_createdirectory_wm.sh
+                   #/home/oradev/scripts/grant_createdirectory_wm.sh
 				'''
             }
         }
@@ -140,7 +140,7 @@ pipeline {
             }
         stage('Import the WMSDEv Config Files') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'Oracle_WMSQAS_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                withCredentials([usernamePassword(credentialsId: 'Oracle_WMSDEV_User',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
                 {
                 sh '''
                    echo "Importing the WMS CONFIG"
@@ -149,6 +149,24 @@ pipeline {
 			'''
                 }
             }
+            post {
+              always {
+            echo 'This will always run'
+        }
+           success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
             }
         }
     }
