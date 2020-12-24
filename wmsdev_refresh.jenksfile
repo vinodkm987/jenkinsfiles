@@ -108,7 +108,7 @@ pipeline {
                 sh '''
                    echo "Importing the DB"
                    echo "Username is $USERNAME"
-                   /home/oradev/scripts/createsailing.sh
+                   #/home/oradev/scripts/createsailing.sh
 				'''
         
                 }
@@ -132,7 +132,7 @@ pipeline {
                 sh '''
                    echo "Importing the MDA Config"
                    echo "Username is $USERNAME"
-                   /home/oradev/scripts/import_mdaconfig.sh
+                   #/home/oradev/scripts/import_mdaconfig.sh
 				'''
         
                 }
