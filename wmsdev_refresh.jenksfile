@@ -145,29 +145,37 @@ pipeline {
                 sh '''
                    echo "Importing the WMS CONFIG"
                    echo "Username is $USERNAME"
-                   /home/oradev/scripts/import_wmsconfig.sh
+                   #/home/oradev/scripts/import_wmsconfig.sh
 			'''
                 }
             }
-            post {
-              always {
-            echo 'This will always run'
-        }
-           success {
-            echo 'This will run only if successful'
-        }
-        failure {
-            echo 'This will run only if failed'
-        }
-        unstable {
-            echo 'This will run only if the run was marked as unstable'
-        }
-        changed {
-            echo 'This will run only if the state of the Pipeline has changed'
-            echo 'For example, if the Pipeline was previously failing but is now successful'
-        }
-    }
             }
+          stage('Archivelog Mode And zip Dump File') {
+                   environment {
+                            Prddumpzipfile = "${PRDBackupFile}" + ".gz"
+              }
+            steps {
+                parallel(
+                noarchivelogmode : {
+                sh '''
+                    export BUILD_ID=dontKillMe
+                    export JENKINS_NODE_COOKIE=dontKillMe
+				    echo " Starting DB and Changing it to NoArchivelog Mode "
+                    /home/oradev/scripts/change_toarchivelog.sh
+				    echo " Starting DB and changing it to No Archivelog Mode"
+                '''
+                },
+                unzipdmp: {
+                    sh '''
+				      echo " Unzipping the file ${Prddumpzipfile} "
+                      #rm ${PRDBackupFile}
+                      gzip /oradevs/export/wmosdev/${Prddumpzipfile}
+                ''' 
+                }
+                )
+            }
+        }
+
         }
     }
 
