@@ -169,7 +169,7 @@ pipeline {
                     sh '''
 				      echo " Unzipping the file ${Prddumpzipfile} "
                       #rm ${PRDBackupFile}
-                      gzip /oradevs/export/wmosdev/${Prddumpzipfile}
+                      gzip /oradevs/export/wmosdev/${PRDBackupFile}
                 ''' 
                 }
                 )
