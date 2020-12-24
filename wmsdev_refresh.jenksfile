@@ -63,7 +63,7 @@ pipeline {
                 sh '''
                    echo "Importing the DB"
                    echo "Username is $USERNAME"
-                   /home/oradev/scripts/import_wmschema.sh
+                 #  /home/oradev/scripts/import_wmschema.sh
 				'''
         
                 }
@@ -75,7 +75,7 @@ pipeline {
                     export BUILD_ID=dontKillMe
                     export JENKINS_NODE_COOKIE=dontKillMe
                    echo "Starting the Oracle Listener"
-                   /home/oradev/scripts/startlistener.sh
+                  # /home/oradev/scripts/startlistener.sh
 				''' 
             }
     } 
@@ -83,7 +83,7 @@ pipeline {
             steps {
                  sh '''
                    echo "Executing Post Import"
-                  # /home/oradev/scripts/chng_password.sh
+                   /home/oradev/scripts/chng_password.sh
 				'''
 
             }
@@ -97,7 +97,7 @@ pipeline {
                 sh '''
                    echo "Importing the DB"
                    echo "Username is $USERNAME"
-                   #/home/oradev/scripts/ExecutePostImport.sh
+                   /home/oradev/scripts/ExecutePostImport.sh
 				'''
         
                 }
@@ -108,7 +108,7 @@ pipeline {
                 sh '''
                    echo "Importing the DB"
                    echo "Username is $USERNAME"
-                  # /home/oradev/scripts/createsailing.sh
+                   /home/oradev/scripts/createsailing.sh
 				'''
         
                 }
@@ -121,7 +121,7 @@ pipeline {
             steps {
                 sh '''
                    echo "Granting Permissions"
-                   #/home/oradev/scripts/grant_createdirectory_wm.sh
+                   /home/oradev/scripts/grant_createdirectory_wm.sh
 				'''
             }
         }
@@ -132,7 +132,7 @@ pipeline {
                 sh '''
                    echo "Importing the MDA Config"
                    echo "Username is $USERNAME"
-                   #/home/oradev/scripts/import_mdaconfig.sh
+                   /home/oradev/scripts/import_mdaconfig.sh
 				'''
         
                 }
@@ -145,7 +145,7 @@ pipeline {
                 sh '''
                    echo "Importing the WMS CONFIG"
                    echo "Username is $USERNAME"
-                   #/home/oradev/scripts/import_wmsconfig.sh
+                   /home/oradev/scripts/import_wmsconfig.sh
 			'''
                 }
             }
