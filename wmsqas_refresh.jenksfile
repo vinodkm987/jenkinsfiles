@@ -8,7 +8,7 @@ pipeline {
             steps {
                 sh '''
                    echo " Stopping all Applications .. "
-                '''
+               '''
             }
         }
 		  stage('Copy Prd File to QAS') {
